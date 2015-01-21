@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>The current time</title>
+</head>
+<body>
+{#显示时间的代码#}
+{% extends "base.html" %}
+{% block title %}The current time{% endblock %}
+{% block content %}
+<p>It is now {{ current_datetime}}.</p>
+{% endblock %}
+{# <h1>My helpful timestamp site</h1>#}
+{#It is now: {{current_datetime}}.#}
+{#<hr>#}
+{#    <p>Thanks for visiting my site.</p>#}
+</body>
+</html>
