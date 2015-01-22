@@ -8,6 +8,11 @@ class BookManager(models.Manager):
         return self.filter(title__icontains=keyword).count()
 
 
+class DahlBookManager(models.Manager):
+    def get_query_set(self):
+        return super(DahlBookManager, self).get_query_set().filter(author='Roald Dahl')
+
+
 class Publisher(models.Model):
     name = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
@@ -37,6 +42,17 @@ class Book(models.Model):
     publisher = models.ForeignKey(Publisher)
     publication_date = models.DateField(blank=True, verbose_name='e-mail')
     num_pages = models.IntegerField(blank=True, null=True)
-    objects = BookManager()
+    # objects = BookManager()
+    objects = models.Manager()           # The default manager.
+    dahl_objects = DahlBookManager()     # The Dahl-specific manager.
     def __unicode__(self):
          return self.title
+
+
+class MaleManager(models.Manager):
+    def get_query_set(self):
+        return super(MaleManager, self).get_query_set().filter(sex='M')
+
+class FemaleManager(models.Manager):
+    def get_query_set(self):
+        return super(FemaleManager, self).get_query_set().filter(sex='F')

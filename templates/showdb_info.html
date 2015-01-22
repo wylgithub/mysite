@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>这是我的第一个下显示表格</title>
+</head>
+<body>
+<div>
+    <span>共{{ total_count }}条记录</span>
+</div>
+<table border="2" bgcolor="#adff2f">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th>编号</th>
+        <th>姓名</th>
+        <th>地址</th>
+        <th>城市</th>
+        <th>省份</th>
+        <th>国家</th>
+        <th>网址</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for place_a in info %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ place_a.id }}</td>
+            <td>{{ place_a.name }}</td>
+            <td>{{ place_a.address}}</td>
+            <td>{{ place_a.city }}</td>
+            <td>{{ place_a.state_province }}</td>
+            <td>{{ place_a.country }}</td>
+            <td><a href="javascript: void(0);" class="tip" data-toggle="tooltip" title="{{ palce_a.name }}">
+                <div style="width: 350px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                    {{ place_a.website }}
+                </div>
+            </a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{#<h1>hellow</h1>#}
+</body>
+</html>
