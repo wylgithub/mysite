@@ -1,16 +1,16 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from books import views
-from mysite import settings
 from mysite.views import hello, current_datetime, hours_ahead, display_meta, printInfo
+from books.models import Publisher
 
+
+publisher_info = {
+    'queryset': Publisher.objects.all(),
+}
 
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'mysite.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
 
     ('^hello/$', hello),
     url(r'^admin/', include(admin.site.urls)),

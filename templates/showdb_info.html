@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>这是我的第一个下显示表格</title>
 </head>
+<script src="/static/js/info.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/CSS/style.css">
 <body>
 <div>
     <span>共{{ total_count }}条记录</span>
 </div>
-<table border="2" bgcolor="#adff2f">
+<table border="2">
     <thead>
     <tr>
         <th>No.</th>
@@ -40,6 +42,8 @@
     {% endfor %}
     </tbody>
 </table>
+<button  id="demo" type="button" onclick="displayDate()"></button>
+<p>我是一个id属性显示的段落</p>
 {#<h1>hellow</h1>#}
 </body>
 </html>

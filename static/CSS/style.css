@@ -1,0 +1,23 @@
+body
+{
+    background-color: aliceblue;
+    color: black;
+}
+h1
+{
+    columns: pink;
+    text-align: center;
+    font-family: "Droid Serif", "DejaVu Serif", "STIX", serif;
+}
+p
+{
+    font-family: 宋体;
+    color: antiquewhite;
+    font-size: 20px;
+}
+table
+{
+    color: red;
+    font-size: large;
+
+}
