@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from books import views
 from mysite import settings
-from mysite.views import hello, current_datetime, hours_ahead, display_meta
+from mysite.views import hello, current_datetime, hours_ahead, display_meta, printInfo
 
 
 
@@ -20,12 +20,6 @@ urlpatterns = patterns('',
     # (r'^search-form/$', views.search_form),
     (r'^search/$', views.search),
     (r'^contact/$', views.contact),
-
-
+    (r'^printinfo/$', printInfo),
 )
-
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^debuginfo/$', views.debug),
-    )
 
