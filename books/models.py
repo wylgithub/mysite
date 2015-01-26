@@ -13,6 +13,8 @@ class DahlBookManager(models.Manager):
         return super(DahlBookManager, self).get_query_set().filter(author='Roald Dahl')
 
 
+
+
 class Publisher(models.Model):
     name = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
