@@ -6,6 +6,8 @@ from books.models import Book
 from contact.forms import ContactForm
 
 
+
+
 def search(request):
     # error = False
     errors = []

@@ -1,17 +1,18 @@
+from cStringIO import StringIO
+from celery import canvas
 __author__ = 'wyl'
-
-from django.template import loader, RequestContext, TemplateDoesNotExist
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from django.template import Context,Template
+from django.template import Context
 from django.template.loader import get_template
 
 from django.http import HttpResponse
 import datetime
 from books.models import Publisher
 from django.http import Http404
-from django.template import TemplateDoesNotExist
+
+import csv
 
 def printInfo(request):
     info = Publisher.objects.all().order_by('city')
@@ -94,3 +95,78 @@ def view_2(request):
 #     Publisher.objects.filter(id=author_id).update(last_accessed=now)
 #
 #     return response
+
+# 日期：2015.1.26DJANGO的十三章训练
+
+def my_image(request):
+    image_data = open("/home/wyl/test/test1.png", "rb").read()
+    return HttpResponse(image_data, mimetype="image/png")
+
+
+# Number of unruly passengers each year 1995 - 2005. In a real application
+# this would likely come from a database or some other back-end data store.
+UNRULY_PASSENGERS = [146,184,235,200,226,251,299,273,281,304,203]
+
+
+def unruly_passengers_csv(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=unruly.csv'
+
+    # Create the CSV writer using the HttpResponse as the "file."
+    writer = csv.writer(response)
+    writer.writerow(['Year', 'Unruly Airline Passengers'])
+    for (year, num) in zip(range(1995, 2006), UNRULY_PASSENGERS):
+        writer.writerow([year, num])
+
+    return response
+
+
+# 和 CSV 类似，由 Django 动态生成 PDF 文件很简单，因为 ReportLab API 同样可以使用类似文件对象。
+
+def hello_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    # application/pdf告诉浏览器这是一个pdf文档
+    # 使用 ReportLab 的 API 很简单： 只需要将 response 对象作为 canvas.Canvas 的第一个参数传入。
+    # 所有后续的 PDF 生成方法需要由 PDF 对象调用（在本例中是 p ），而不是 response 对象。
+    #最后需要对 PDF 文件调用 showPage() 和 save() 方法（否则你会得到一个损坏的 PDF 文件）。
+    #
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    return response
+
+# 下面是使用 cStringIO 重写的 Hello World 例子：
+
+
+def hello_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+
+    temp = StringIO()
+    # Create the PDF object, using the StringIO object as its "file."
+    p = canvas.Canvas(temp)
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly.
+    p.showPage()
+    p.save()
+
+    # Get the value of the StringIO buffer and write it to the response.
+    response.write(temp.getvalue())
+    return response
+
+

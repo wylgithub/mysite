@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -65,10 +65,27 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
 )
 
+#
+# ADMINS = (
+#     ('wuyanlong', 'ltwuyanlong@163.com'),
+#     # ('Paul McCartney', 'pmacca@example.com'),
+# )
+# # Database
+# # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+#
+# MANAGERS = (
+#     ('George Harrison', 'ltwuyanlong@163.com'),
+#     # ('Ringo Starr', 'ringo@example.com'),
+# )
 
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# 在这里，我们从python标准库导入了socket 模块，使用它来检查当前系统的主机名。 我们可以通过检查主机名来确认代码是否运行在产品服务器上。
+import socket
+
+if socket.gethostname() == 'my-laptop':
+    DEBUG = TEMPLATE_DEBUG = True
+else:
+    DEBUG = TEMPLATE_DEBUG = False
 
 DATABASES = {
     'default': {
